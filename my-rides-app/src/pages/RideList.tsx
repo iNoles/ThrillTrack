@@ -85,7 +85,7 @@ function RideList() {
               filteredRides.map(r => (
                 <tr key={r.id}>
                   <td>{r.id}</td>
-                  <td><Link to={`/rides/${r.id}`}>{r.name}</Link></td>
+                  <td><Link to={`/ThrillTrack/${r.id}`}>{r.name}</Link></td>
                   <td>{r.park}</td>
                   <td><span className={`badge ${r.status === "Operating" ? "bg-success" : "bg-secondary"} text-white`}>
                     {r.status}
