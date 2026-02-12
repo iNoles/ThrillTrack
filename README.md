@@ -43,6 +43,10 @@ bun install
 bun index.ts
 sh show_rides_cli.sh
 
+## Contributions
+
+Contributions welcome! Feel free to open issues or PRs.
+
 # Start React frontend
 cd my-rides-app
 bun dev
