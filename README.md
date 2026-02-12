@@ -42,6 +42,7 @@ bun install
 # Start the Bun Server (if using CLI)
 bun index.ts
 sh show_rides_cli.sh
+```
 
 ## Contributions
 
