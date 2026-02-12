@@ -1,0 +1,162 @@
+/* ================================
+   Base / Light Mode
+================================= */
+body {
+  background-color: #ffffff;
+  color: #121212;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Tables */
+.table {
+  border-color: #dee2e6;
+}
+
+/* Table striped rows */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Links */
+a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}
+
+/* Buttons */
+.btn {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Cards */
+.card {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* ================================
+   Dark Mode
+================================= */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Cards */
+body.dark-mode .card {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+/* Inputs and Selects */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border-color: #333;
+}
+
+/* Input focus */
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border-color: #666;
+  box-shadow: none;
+}
+
+/* Placeholder text */
+body.dark-mode ::placeholder {
+  color: #9ca3af; /* light gray */
+  opacity: 1;
+}
+
+/* Safari / older browsers */
+body.dark-mode :-ms-input-placeholder {
+  color: #9ca3af;
+}
+
+body.dark-mode ::-ms-input-placeholder {
+  color: #9ca3af;
+}
+
+/* Tables */
+body.dark-mode .table {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border-color: #333;
+}
+
+body.dark-mode .table tbody tr {
+  border-bottom: 1px solid #333;
+}
+
+body.dark-mode .table tbody td {
+  color: #e0e0e0;
+}
+
+body.dark-mode .table-dark thead th,
+body.dark-mode thead th {
+  background-color: #181818; /* slightly darker than body */
+  color: #e0e0e0;
+  border-bottom: 1px solid #333;
+}
+
+/* Links */
+body.dark-mode a {
+  color: #4ea3ff;
+}
+
+body.dark-mode a:hover {
+  color: #a3d1ff;
+}
+
+/* Buttons */
+body.dark-mode .btn {
+  background-color: #333;
+  color: #e0e0e0;
+  border-color: #444;
+}
+
+body.dark-mode .btn:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Smooth transitions for dark mode toggling */
+body.dark-mode,
+body.dark-mode .card,
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode .btn,
+body.dark-mode .table {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Dark mode table body cells */
+body.dark-mode table.table tbody td {
+  background-color: #1f1f1f !important; /* slightly lighter than header */
+  color: #e0e0e0 !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+/* Striped rows in dark mode (even lighter) */
+body.dark-mode table.table-striped tbody tr:nth-of-type(odd) td {
+  background-color: #252525 !important;
+}
+
+/* Hover effect */
+body.dark-mode table.table-hover tbody tr:hover td {
+  background-color: #2b2b2b !important;
+}
