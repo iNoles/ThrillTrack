@@ -22,8 +22,8 @@ function App() {
         </button>
       </div>
       <Routes>
-        <Route path="/" element={<RideList />} />
-        <Route path="/rides/:id" element={<RideDetails />} />
+        <Route path="/ThrillTrack/" element={<RideList />} />
+        <Route path="/ThrillTrack/:id" element={<RideDetails />} />
       </Routes>
     </div>
   );
