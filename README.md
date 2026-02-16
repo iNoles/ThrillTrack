@@ -20,6 +20,9 @@
 - Fully powered by **Supabase Edge Function** for API routes
 - CLI uses Bun Server
 
+## Screenshot
+![Main](main.png)
+
 ## Getting Started
 
 1. Clone the repo
