@@ -25,9 +25,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      # Optional: use Bun
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
+
+      - name: Restore Bun cache
+        uses: actions/cache@v4
+        with:
+         path: ~/.bun/install/cache
+         key: ${{ runner.os }}-bun-${{ hashFiles('bun.lockb') }}
+         restore-keys: |
+           ${{ runner.os }}-bun-
 
       - name: Install dependencies
         working-directory: my-rides-app
