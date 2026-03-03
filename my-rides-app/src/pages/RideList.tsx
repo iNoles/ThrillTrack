@@ -18,11 +18,17 @@ function RideList() {
   const parks = Array.from(new Set(rides.map((r) => r.park)));
 
   // Filter rides based on search input
-  const filteredRides = rides.filter(r =>
-    r.name.toLowerCase().includes(search.toLowerCase()) ||
-    r.park.toLowerCase().includes(search.toLowerCase()) ||
-    r.type.some((t: string) => t.toLowerCase().includes(search.toLowerCase()))
-  );
+  const filteredRides = rides.filter((r) => {
+    const matchesSearch =
+      r.name.toLowerCase().includes(search.toLowerCase()) ||
+      r.park.toLowerCase().includes(search.toLowerCase()) ||
+      r.type.some((t: string) =>
+        t.toLowerCase().includes(search.toLowerCase())
+      );
+    
+    const matchesPark = park === "" || r.park === park;
+    return matchesSearch && matchesPark;
+  });
 
   if (loading) {
     return (
