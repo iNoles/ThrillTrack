@@ -1,6 +1,6 @@
 # ThrillTrack - Full Stack Web Application
 
-🚀 **ThrillTrack** is a React + Bootstrap + Bun + Supabase app that lets you explore theme park rides, including details like thrill rating, ride type, park, and more. Perfect for roller coaster enthusiasts!
+**ThrillTrack** is a React + Bootstrap + Bun + Supabase app that lets you explore theme park rides, including details like thrill rating, ride type, park, and more. Perfect for roller coaster enthusiasts!
 
 ## Features
 
