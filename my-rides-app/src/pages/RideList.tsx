@@ -73,19 +73,45 @@ function RideList() {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center my-5">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <>
+        <Helmet>
+          <title>All Theme Park Rides | ThrillTrack</title>
+        </Helmet>
+        <div className="placeholder-glow">
+          <div
+            className="placeholder col-4 mb-3 d-block"
+            style={{ height: "2rem" }}
+          />
+          <div className="row g-2 mb-3">
+            <div className="col-12 col-md-7">
+              <div className="placeholder col-12" style={{ height: "2.5rem" }} />
+            </div>
+            <div className="col-12 col-md-5">
+              <div className="placeholder col-12" style={{ height: "2.5rem" }} />
+            </div>
+          </div>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="placeholder col-12 mb-2 d-block"
+              style={{ height: "2rem" }}
+            />
+          ))}
         </div>
-      </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="alert alert-danger" role="alert">
-        <strong>Failed to load rides.</strong> {error}
-      </div>
+      <>
+        <Helmet>
+          <title>Error | ThrillTrack</title>
+        </Helmet>
+        <div className="alert alert-danger" role="alert">
+          <strong>Failed to load rides.</strong> {error}
+        </div>
+      </>
     );
   }
 
@@ -101,132 +127,234 @@ function RideList() {
 
       <h2 className="mb-3">All Rides</h2>
 
-      <div className="row g-2 mb-3">
-        <div className="col-12 col-md-8">
-          <input
-            type="search"
-            className="form-control"
-            placeholder="Search rides, parks, or types..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            aria-label="Search rides"
-          />
-        </div>
-        <div className="col-12 col-md-4">
-          <select
-            className="form-select"
-            value={park}
-            onChange={(e) => setPark(e.target.value)}
-            aria-label="Filter by park"
-          >
-            <option value="">All Parks</option>
-            {parks.map((p) => (
-              <option key={p} value={p}>
-                {p}
-              </option>
-            ))}
-          </select>
+      {/* Filters */}
+      <div className="card mb-3">
+        <div className="card-body">
+          <div className="row g-2">
+            <div className="col-12 col-md-7">
+              <div className="input-group">
+                <span className="input-group-text" aria-hidden="true">
+                  🔍
+                </span>
+                <input
+                  type="search"
+                  className="form-control"
+                  placeholder="Search rides, parks, or types..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  aria-label="Search rides"
+                />
+              </div>
+            </div>
+            <div className="col-12 col-md-5">
+              <select
+                className="form-select"
+                value={park}
+                onChange={(e) => setPark(e.target.value)}
+                aria-label="Filter by park"
+              >
+                <option value="">All Parks</option>
+                {parks.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {hasFilters && (
+            <div className="d-flex justify-content-between align-items-center mt-3">
+              <span className="text-body-secondary small">
+                {filteredRides.length} of {rides.length} rides
+              </span>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+                onClick={() => {
+                  setSearch("");
+                  setPark("");
+                }}
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      {hasFilters && (
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <span className="text-body-secondary small">
-            {filteredRides.length} of {rides.length} rides
-          </span>
-          <button
-            type="button"
-            className="btn btn-sm btn-outline-secondary"
-            onClick={() => {
-              setSearch("");
-              setPark("");
-            }}
-          >
-            Clear filters
-          </button>
+      {/* Empty state */}
+      {filteredRides.length === 0 ? (
+        <div className="text-center py-5 text-body-secondary">
+          <div className="display-6 mb-2" aria-hidden="true">
+            🔍
+          </div>
+          <p className="mb-3">
+            {hasFilters
+              ? "No rides match your filters."
+              : "No rides available."}
+          </p>
+          {hasFilters && (
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => {
+                setSearch("");
+                setPark("");
+              }}
+            >
+              Clear filters
+            </button>
+          )}
         </div>
-      )}
+      ) : (
+        <>
+          {/* Table — md and up */}
+          <div className="table-responsive d-none d-md-block">
+            <table className="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th scope="col" className="text-body-secondary">
+                    #
+                  </th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Park</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Type</th>
+                  <th scope="col" style={{ width: "160px" }}>
+                    Thrill
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredRides.map((r) => {
+                  const types = Array.isArray(r.type) ? r.type : [];
+                  const operating = r.status === "Operating";
 
-      <div className="table-responsive">
-        <table className="table table-striped table-hover align-middle">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Park</th>
-              <th scope="col">Status</th>
-              <th scope="col">Type</th>
-              <th scope="col">Thrill</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredRides.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="text-center py-4 text-body-secondary">
-                  {hasFilters
-                    ? "No rides match your filters."
-                    : "No rides available."}
-                </td>
-              </tr>
-            ) : (
-              filteredRides.map((r) => {
+                  return (
+                    <tr key={r.id}>
+                      <td className="text-body-secondary">{r.id}</td>
+                      <td>
+                        <Link
+                          to={`/${r.id}`}
+                          className="fw-semibold text-decoration-none"
+                        >
+                          {r.name}
+                        </Link>
+                      </td>
+                      <td>{r.park}</td>
+                      <td>
+                        <span
+                          className={`badge ${
+                            operating ? "text-bg-success" : "text-bg-secondary"
+                          }`}
+                        >
+                          {r.status}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="d-flex flex-wrap gap-1">
+                          {types.map((t) => (
+                            <span
+                              key={t}
+                              className="badge text-bg-light border fw-normal"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td>
+                        <ThrillBar value={r.thrill_rating} />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Cards — below md */}
+          <div className="d-md-none">
+            <div className="row g-3">
+              {filteredRides.map((r) => {
                 const types = Array.isArray(r.type) ? r.type : [];
                 const operating = r.status === "Operating";
 
                 return (
-                  <tr key={r.id}>
-                    <td className="text-body-secondary">{r.id}</td>
-                    <td>
-                      <Link to={`/${r.id}`} className="fw-medium">
-                        {r.name}
-                      </Link>
-                    </td>
-                    <td>{r.park}</td>
-                    <td>
-                      <span
-                        className={`badge ${
-                          operating ? "bg-success" : "bg-secondary"
-                        }`}
-                      >
-                        {r.status}
-                      </span>
-                    </td>
-                    <td>{types.join(", ")}</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <div className="me-2 small" style={{ minWidth: "38px" }}>
-                          {r.thrill_rating}/10
-                        </div>
-                        <div
-                          className="progress flex-grow-1"
-                          style={{ height: "12px" }}
-                          role="progressbar"
-                          aria-label="Thrill rating"
-                          aria-valuenow={r.thrill_rating}
-                          aria-valuemin={0}
-                          aria-valuemax={10}
-                        >
-                          <div
-                            className={`progress-bar ${
-                              r.thrill_rating >= 8
-                                ? "bg-danger"
-                                : r.thrill_rating >= 5
-                                ? "bg-warning"
-                                : "bg-success"
+                  <div className="col-12" key={r.id}>
+                    <div className="card h-100">
+                      <div className="card-body">
+                        <div className="d-flex justify-content-between align-items-start mb-2">
+                          <h3 className="h6 mb-0">
+                            <Link
+                              to={`/${r.id}`}
+                              className="text-decoration-none stretched-link"
+                            >
+                              {r.name}
+                            </Link>
+                          </h3>
+                          <span
+                            className={`badge ${
+                              operating
+                                ? "text-bg-success"
+                                : "text-bg-secondary"
                             }`}
-                            style={{ width: `${(r.thrill_rating / 10) * 100}%` }}
-                          />
+                          >
+                            {r.status}
+                          </span>
                         </div>
+                        <p className="text-body-secondary small mb-2">
+                          {r.park}
+                        </p>
+                        <div className="d-flex flex-wrap gap-1 mb-3">
+                          {types.map((t) => (
+                            <span
+                              key={t}
+                              className="badge text-bg-light border fw-normal"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                        <ThrillBar value={r.thrill_rating} />
                       </div>
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 );
-              })
-            )}
-          </tbody>
-        </table>
-      </div>
+              })}
+            </div>
+          </div>
+        </>
+      )}
     </>
+  );
+}
+
+function ThrillBar({ value }: { value: number }) {
+  const color =
+    value >= 8 ? "bg-danger" : value >= 5 ? "bg-warning" : "bg-success";
+
+  return (
+    <div className="d-flex align-items-center gap-2">
+      <div className="small text-body-secondary" style={{ minWidth: "38px" }}>
+        {value}/10
+      </div>
+      <div
+        className="progress flex-grow-1"
+        style={{ height: "8px" }}
+        role="progressbar"
+        aria-label="Thrill rating"
+        aria-valuenow={value}
+        aria-valuemin={0}
+        aria-valuemax={10}
+      >
+        <div
+          className={`progress-bar ${color}`}
+          style={{ width: `${value * 10}%` }}
+        />
+      </div>
+    </div>
   );
 }
 
