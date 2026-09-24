@@ -5,7 +5,6 @@ import RideDetails from "./pages/RideDetails";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
-    // Respect saved preference, then OS preference
     const saved = localStorage.getItem("theme");
     if (saved === "dark") return true;
     if (saved === "light") return false;
@@ -21,24 +20,33 @@ function App() {
   }, [darkMode]);
 
   return (
-    <div className="container my-5">
-      <header className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="display-5 mb-0">
-          <Link to="/" className="text-decoration-none text-body">
+    <>
+      <nav className="navbar navbar-expand bg-body-tertiary border-bottom sticky-top">
+        <div className="container">
+          <Link to="/" className="navbar-brand fw-semibold">
             🎢 ThrillTrack
           </Link>
-        </h1>
-        <button
-          type="button"
-          className="btn btn-outline-secondary"
-          onClick={() => setDarkMode((d) => !d)}
-          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-        >
-          {darkMode ? "☀️ Light" : "🌙 Dark"}
-        </button>
-      </header>
 
-      <main>
+          <div className="d-flex align-items-center gap-2">
+            <NavLink to="/" end className="btn btn-sm btn-outline-secondary d-none d-sm-inline-block">
+              All Rides
+            </NavLink>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => setDarkMode((d) => !d)}
+              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {darkMode ? "☀️" : "🌙"}
+              <span className="d-none d-sm-inline ms-1">
+                {darkMode ? "Light" : "Dark"}
+              </span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main className="container my-4 my-md-5">
         <Routes>
           <Route path="/" element={<RideList />} />
           <Route path="/:id" element={<RideDetails />} />
@@ -46,18 +54,21 @@ function App() {
         </Routes>
       </main>
 
-      <footer className="text-center text-body-secondary mt-5 small">
-        ThrillTrack · Built with React &amp; Bootstrap
+      <footer className="border-top py-4 mt-auto">
+        <div className="container text-center text-body-secondary small">
+          ThrillTrack · Built with React &amp; Bootstrap
+        </div>
       </footer>
-    </div>
+    </>
   );
 }
 
 function NotFound() {
   return (
     <div className="text-center py-5">
-      <h2 className="display-6">🎢 Ride not found</h2>
-      <p className="text-body-secondary">
+      <div className="display-1">🎢</div>
+      <h2 className="mb-2">Ride not found</h2>
+      <p className="text-body-secondary mb-4">
         That coaster isn't in the park.
       </p>
       <NavLink to="/" className="btn btn-primary">
